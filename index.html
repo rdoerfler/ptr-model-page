@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PTR Audio Examples</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2em;
+    }
+    h2 {
+      margin-top: 2em;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 2em;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5em;
+      text-align: center;
+    }
+    audio {
+      width: 150px;
+    }
+    img.spectrogram {
+      max-width: 150px;
+      display: block;
+      margin: 0.2em auto;
+    }
+  </style>
+</head>
+<body>
+
+<h1>PTR Audio Examples</h1>
+
+<script>
+  // GitHub Pages base paths
+  const baseAudioPath = "/ptr-examples/audiofiles";
+  const baseSpecPath  = "/ptr-examples/spectrograms";
+
+  // Define sequences for each dataset
+  const sequences = {
+    "C": [40, 56, 1, 3, 11, 13, 18, 30],
+    "B": [46, 56, 5, 7, 13, 23, 29, 34],
+    "A": [2, 14, 20, 22, 37, 39, 43, 31]
+  };
+
+  const datasets = ["C", "B", "A"];
+
+  function createRow(seqNum, rowNum, dataset, type) {
+    // audio paths
+    const target = `${baseAudioPath}/HPN/${dataset}/${type}/targets/targets_${seqNum}.mp3`;
+    const hpnPred = `${baseAudioPath}/HPN/${dataset}/${type}/predictions/predictions_${seqNum}.mp3`;
+    const ptrPred = `${baseAudioPath}/PTR/${dataset}/${type}/predictions/predictions_${seqNum}.mp3`;
+
+    // spectrogram paths
+    const targetSpec = `${baseSpecPath}/HPN/${dataset}/${type}/targets/targets_${seqNum}.png`;
+    const hpnSpec = `${baseSpecPath}/HPN/${dataset}/${type}/predictions/predictions_${seqNum}.png`;
+    const ptrSpec = `${baseSpecPath}/PTR/${dataset}/${type}/predictions/predictions_${seqNum}.png`;
+
+    return `
+      <tr>
+        <td>${rowNum}</td>
+        <td>
+          <img class="spectrogram" src="${targetSpec}" alt="Target ${seqNum}">
+          <audio controls><source src="${target}" type="audio/mpeg"></audio>
+        </td>
+        <td>
+          <img class="spectrogram" src="${hpnSpec}" alt="HPN ${seqNum}">
+          <audio controls><source src="${hpnPred}" type="audio/mpeg"></audio>
+        </td>
+        <td>
+          <img class="spectrogram" src="${ptrSpec}" alt="PTR ${seqNum}">
+          <audio controls><source src="${ptrPred}" type="audio/mpeg"></audio>
+        </td>
+      </tr>
+    `;
+  }
+
+  // Best Predictions
+  document.write(`<h2>Best Predictions</h2>`);
+  datasets.forEach(dataset => {
+    document.write(`<h3>Dataset ${dataset}</h3>`);
+    document.write("<table>");
+    document.write("<tr><th>Example</th><th>Target</th><th>HPN</th><th>PTR</th></tr>");
+
+    sequences[dataset].forEach((seqNumRaw, i) => {
+      const seqNum = String(seqNumRaw).padStart(2, "0");
+      const rowNum = i + 1;
+      document.write(createRow(seqNum, rowNum, dataset, "test_inference"));
+    });
+
+    document.write("</table>");
+  });
+
+  // First Predictions
+  document.write(`<h2>First Predictions</h2>`);
+  datasets.forEach(dataset => {
+    document.write(`<h3>Dataset ${dataset}</h3>`);
+    document.write("<table>");
+    document.write("<tr><th>Example</th><th>Target</th><th>HPN</th><th>PTR</th></tr>");
+
+    for (let i = 1; i <= 8; i++) {
+      const seqNum = String(i).padStart(2, "0");
+      const rowNum = i;
+      document.write(createRow(seqNum, rowNum, dataset, "epoch_001"));
+    }
+
+    document.write("</table>");
+  });
+</script>
+
+</body>
+</html>
