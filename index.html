@@ -47,10 +47,7 @@
       max-width: 900px;
       width: 100%;
       margin: 2em auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      background: white;
-      padding: 1em;
+      display: block;
     }
 
     .links {
@@ -92,6 +89,16 @@
       box-shadow: none;
       background: #f7fafc;
       border-color: #cbd5e0;
+    }
+
+    .section-title {
+      color: #2d3748;
+      font-size: 2em;
+      margin-top: 2em;
+      margin-bottom: 2em;
+      text-align: center;
+      font-weight: 600;
+      padding-top: 1em;
     }
 
     h2 {
@@ -182,6 +189,10 @@
         font-size: 1.8em;
       }
 
+      .section-title {
+        font-size: 1.6em;
+      }
+
       h2 {
         font-size: 1.5em;
       }
@@ -214,7 +225,7 @@
 
 <div class="container">
   <div class="header-section">
-    <h1>PTR Audio Examples</h1>
+    <h1>Pulse-Train-Resonator (PTR) Model</h1>
 
     <img class="model-architecture" src="https://raw.githubusercontent.com/rdoerfler/ptr-model-page/main/figures/ptr-model_overview.png" alt="PTR Model Architecture">
 
@@ -225,6 +236,8 @@
       <a href="#" class="disabled">Paper (Coming Soon)</a>
     </div>
   </div>
+
+  <div class="section-title">Audio Examples</div>
 
   <script>
     // GitHub raw content paths - BOTH need to use raw.githubusercontent.com
